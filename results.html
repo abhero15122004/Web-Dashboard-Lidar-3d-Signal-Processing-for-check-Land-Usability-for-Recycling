@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>LiDAR Analysis Results</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>Analysis Results</h1>
+        <p><strong>Estimated Volume:</strong> {{ volume }} cubic units</p>
+        <p><strong>Land Usability:</strong> <span class="usability {{ usability|lower|replace(' ', '-') }}">{{ usability }}</span></p>
+
+        <div class="image-block">
+            <h2>3D Terrain Surface</h2>
+            <img src="data:image/png;base64,{{ terrain_img }}" alt="3D Surface Plot">
+        </div>
+
+        <div class="image-block">
+            <h2>Error Comparison</h2>
+            <img src="data:image/png;base64,{{ error_img }}" alt="Error Bar Chart">
+        </div>
+
+        <h2>Error Table</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Method</th>
+                    <th>Average Error</th>
+                    <th>Median Error</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for row in error_table %}
+                <tr>
+                    <td>{{ row.method }}</td>
+                    <td>{{ row.avg }}</td>
+                    <td>{{ row.med }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <a href="/" class="btn">Upload Another File</a>
+    </div>
+</body>
+</html>
